@@ -1,26 +1,57 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div>
+    <MiniCart :amount="this.products.length"></MiniCart>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MiniCart from './components/MiniCart.vue'
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    MiniCart
+  },
+  data() {
+    return {
+      products: []
+    }
+  },
+  methods: {
+    cartListener() {
+      window.addEventListener('productToCart', (evt) => {
+        this.products.push(evt.detail.product);
+        this.pushProductsLocalstorage();
+        }),
+      window.addEventListener('removeProductFromCart', (evt) => {
+        this.products.splice(this.products.findIndex(x => x.id == evt.detail.product.id), 1);
+        this.pushProductsLocalstorage();
+        })
+    },
+    getProductsLocalstorage() {
+      return JSON.parse(localStorage.getItem("mfe-products"));
+    },
+    pushProductsLocalstorage() {
+      localStorage.setItem("mfe-products", JSON.stringify(this.products));
+    }
+  },
+  beforeMount() {
+    this.cartListener();
+    if (this.getProductsLocalstorage() != null) {
+      this.products = this.getProductsLocalstorage();
+    }
   }
 }
 </script>
 
 <style>
-#app {
+/* .single-spa-container {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
-}
+  margin-top: 300px;
+} */
 </style>
