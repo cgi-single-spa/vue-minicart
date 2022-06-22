@@ -1,6 +1,6 @@
 <template>
   <div>
-    <badge-button :badgeamount="amount" onclick="location.href='cart'">🛒 Cart</badge-button>
+    <badge-button :badgeamount="amount" onclick="location.href='/root-config/#/cart'">🛒 Cart</badge-button>
   </div>
 </template>
 
