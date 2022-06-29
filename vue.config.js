@@ -6,6 +6,6 @@ module.exports = defineConfig({
       libraryTarget: 'system',
       filename: 'js/[name].js',
     },
-    externals: ['@cgi/styleguide', 'vue']
+    externals: ['@cgi/styleguide', 'vue', 'vue-single-spa']
   },
 })
